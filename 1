@@ -1,0 +1,31 @@
+#include <iostream>
+
+using namespace std;
+struct ogrenci{
+string name;
+int not11;
+int not22;
+};
+int main()
+{
+    ogrenci dizi[3];
+    ogrenci* ptr=dizi;
+    for(int i=0;i<3;i++){
+    cout<<"enter name: "<<endl;
+    cin>>(*(ptr+i)).name;
+    cout<<"enter not1: "<<endl;
+    cin>>(*(ptr+i)).not11;
+    cout<<"enter note2: "<<endl;
+    cin>>(*(ptr+i)).not22;
+
+}
+for(int i=0;i<3;i++){
+   int sum;
+   sum=((*(ptr+i)).not11+(*(ptr+i)).not22)/2;
+   cout<<"ort: "<<sum<<endl;
+   if(sum<50){
+    cout<<(*(ptr + i)).name <<" kaldi"<<endl;
+   }
+}
+    return 0;
+}
