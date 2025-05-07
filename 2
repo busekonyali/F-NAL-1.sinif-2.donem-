@@ -1,0 +1,60 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+struct ogrenci {
+    char name[20];
+    int vize;
+    int finall;
+};
+
+int main() {
+    ogrenci arr[3];
+    ogrenci* ptr = arr;
+
+    // Dosyaya yazma
+    ofstream file("ogrenciler.txt");
+    if (file.is_open()) {
+        for (int i = 0; i < 3; i++) {
+            cout << "Enter name: " << endl;
+            cin >> (*(ptr + i)).name;
+            cout << "Enter vize: " << endl;
+            cin >> (*(ptr + i)).vize;
+            cout << "Enter final: " << endl;
+            cin >> (*(ptr + i)).finall;
+
+            // Dosyaya yazma, her öğrenci verisini birbirinden ayırmadan yazıyoruz
+            file << (*(ptr + i)).name << (*(ptr + i)).vize << (*(ptr + i)).finall;
+        }
+    } else {
+        cerr << "File open error" << endl;
+        return 1;
+    }
+    file.close();
+
+    // Dosyadan okuma
+    ifstream filee("ogrenciler.txt", ios::in);
+    if (filee.is_open()) {
+        for (int i = 0; i < 3; i++) {
+            // Dosyadan verileri okurken aynı formatta okunacak
+            filee >> (*(ptr + i)).name >> (*(ptr + i)).vize >> (*(ptr + i)).finall;
+
+            // Ortalama hesaplama
+            float ort = (*(ptr + i)).vize * 0.4 + (*(ptr + i)).finall * 0.6;
+
+            // Geçme/Kalma durumu
+            cout << (*(ptr + i)).name << " ortalama: " << ort << " - ";
+            if (ort < 60) {
+                cout << "Kaldı" << endl;
+            } else {
+                cout << "Geçti" << endl;
+            }
+        }
+    } else {
+        cerr << "File open error" << endl;
+        return 1;
+    }
+
+    return 0;
+}
