@@ -1,0 +1,45 @@
+#include <iostream>
+
+void deleteElement(int*& arr, int& size, int indexToDelete) {
+    if (indexToDelete < 0 || indexToDelete >= size) {
+        std::cout << "Geçersiz indeks!" << std::endl;
+        return;
+    }
+
+    // Eski dizinin bir eleman eksik boyutuna sahip yeni bir dizi oluşturuyoruz
+    int* newArr = new int[size - 1];
+
+    // Elemanları yeni diziye kopyalıyoruz
+    for (int i = 0, j = 0; i < size; i++) {
+        if (i != indexToDelete) {
+            newArr[j++] = arr[i];
+        }
+    }
+
+    delete[] arr;  // Eski diziyi serbest bırakıyoruz
+    arr = newArr;  // Yeni diziyi eski diziye atıyoruz
+    size--;        // Boyutu bir azaltıyoruz
+}
+
+int main() {
+    int size = 5;
+    int* arr = new int[size] {1, 2, 3, 4, 5};
+
+    std::cout << "Eski dizi: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    // 2. indeksteki elemanı silelim (eleman 3)
+    deleteElement(arr, size, 2);
+
+    std::cout << "Yeni dizi: ";
+    for (int i = 0; i < size; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] arr;  // Belleği serbest bırakıyoruz
+    return 0;
+}
